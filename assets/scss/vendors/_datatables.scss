@@ -1,0 +1,7 @@
+@import "@datatables/css/dataTables.bootstrap5.css";
+
+.dt-info,
+.dt-length,
+.dt-search  {
+    @include p2;
+}

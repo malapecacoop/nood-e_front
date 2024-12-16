@@ -1,0 +1,33 @@
+.auth {
+    background: url(/images/page-background.webp);
+    background-size: cover;
+    background-position: top center;
+    min-height: 100vh;
+
+    &__main-wrap {
+        background: white;
+        @include center(true,true);
+        margin-top: -1rem;
+        padding: 1rem 2rem 1.25rem;
+        border-radius: $border-radius;
+        width: 26rem;
+        box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    @include media-breakpoint-down(sm) {
+        padding: 1rem;
+
+        &__main-wrap {
+            position: relative;
+            top: unset;
+            left: unset;
+            transform: none;
+            margin: 0;
+            padding: 1rem 1rem 1.25rem;
+            background: rgba(255,255,255,.3);
+            width: 100%;
+            box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
+        }
+
+    }
+}

@@ -1,0 +1,90 @@
+@charset "utf-8";
+
+/*
+CSS NAMING CONVENTION
+
+We follow the BEM Methodology.
+Examples:
+Block component
+.btn
+
+Element that depends upon the block
+.btn__price
+
+Modifier that changes the style of the block
+.btn--orange
+
+Modifier that changes the style of the block
+.btn__price--highlighted
+
+for more info check https://en.bem.info/methodology/
+*/
+
+// WARNING! The order of the imports affects the cascade, so if you change the order be aware that styles may be overwritten.
+
+// global styles
+@import 'global/bootstrap';
+@import 'global/focus';
+@import 'global/forms';
+@import 'global/layout';
+@import 'global/social-colors';
+@import 'global/typography';
+
+// helpers
+@import 'helpers/variables';
+@import 'helpers/mixins';
+@import 'helpers/utilities';
+
+//components/buttons & links
+@import 'components/buttons-links/anchors';
+@import 'components/buttons-links/bd-link';
+@import 'components/buttons-links/buttons';
+@import 'components/buttons-links/icon-btn';
+
+// components
+@import 'components/dropdown';
+@import 'components/page-heads';
+@import 'components/side-nav';
+@import 'components/top-bar';
+
+@import 'components/breadcrumb';
+// @import 'components/card';
+// @import 'components/caret-down';
+// @import 'components/caret-right';
+// @import 'components/cookie-notice';
+// @import 'components/counters';
+// @import 'components/custom-ul';
+// @import 'components/divider';
+// @import 'components/footer-1';
+
+// @import 'components/img-zoom';
+// @import 'components/loading-page-indicator';
+// @import 'components/modal-full-screen';
+@import 'components/pagination';
+// @import 'components/pillnav';
+// @import 'components/pu-card';
+// @import "components/scroll-to-top";
+// @import 'components/search-box';
+// @import 'components/skip-link';
+// @import 'components/stripe-form';
+// @import 'components/tabs';
+@import 'components/tables';
+@import 'components/tag';
+// @import 'components/tooltip-alert';
+
+// pages
+@import 'pages/auth';
+@import 'pages/event';
+@import 'pages/maintenance';
+@import 'pages/not-found';
+@import 'pages/page';
+// vendors
+@import "vendors/datatables";
+@import "vendors/font-awesome";
+@import "vendors/fullcalendar";
+@import 'vendors/select2';
+@import "vendors/slick-carousel";
+@import "vendors/snackbar";
+@import "vendors/lozad";
+@import "vendors/material-icons";
+// @import "/node_modules/bootstrap/dist/css/bootstrap.min.css";

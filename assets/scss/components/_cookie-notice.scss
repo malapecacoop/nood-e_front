@@ -1,0 +1,26 @@
+@use "../global/bootstrap";
+
+$cookie-notice-width: 30rem;
+
+.cookie-notice {
+	transition: left 0.7s;
+	position: fixed;
+	bottom: 1rem;
+	left: calc(#{$cookie-notice-width} * -1 - 4rem);
+	background: $primary;
+	padding: 1rem;
+	border-radius: $border-radius;
+	max-width: $cookie-notice-width;
+	z-index: 16;
+	will-change: left;
+	
+	&.js--cookie-in {
+		transition: left 0.7s;
+		left: 1rem;
+
+		@media (max-width: calc(#{$cookie-notice-width} + 2rem)) {
+			width: 100%;
+			max-width: calc(100vw - 2rem);
+		}
+	}
+}

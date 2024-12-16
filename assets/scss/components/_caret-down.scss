@@ -1,0 +1,33 @@
+@use "../helpers/mixins";
+@use "../global/bootstrap";
+
+.caret-down {
+    display: inline-block;
+    position: relative;
+    height: .5rem;
+    width: 1rem;
+    top: 2px;
+
+    &__line1,
+    &__line2 {
+        transition: $transition-base;
+        position: absolute;
+        top: 0.15rem;
+        height: 2px;
+        width: 0.5rem;
+        background: $black;
+        border-radius: 0.3rem;
+    }
+
+    &__line1 {
+        transform: rotate(45deg) ;
+        left: -0.15rem;
+    }
+
+    &__line2 {
+        transform: rotate(-45deg) ;
+        left: 0.15rem;
+    }
+}
+
+// Transition for the lines are defined in scss and called as needed inside their parent block scss file.

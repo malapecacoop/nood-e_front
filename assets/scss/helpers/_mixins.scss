@@ -1,0 +1,147 @@
+//these four properties will center a child element both horizontally and vertically inside, assuming the parent element has position: relative;
+//https://css-tricks.com/snippets/sass/centering-mixin/ 
+@mixin center($horizontal: true, $vertical: true) {
+    position: absolute;
+    @if ($horizontal and $vertical) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    } @else if ($horizontal) {
+        left: 50%;
+        transform: translate(-50%, 0);
+    } @else if ($vertical) {
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+}
+
+@mixin clearfix() {
+    *zoom: 1;
+    &:after,
+    &:before {
+        display: table;
+        clear: both;
+        content: "";
+        line-height: 0;
+    }
+}
+
+@mixin caretDownLine1 {
+        transition: $transition-base;
+        transform: rotate(0deg);
+        left: -0.1em;
+}
+
+@mixin caretDownLine2 {
+        transition: $transition-base;
+        transform: rotate(0deg);
+        left: 0.1em;
+}
+
+@mixin wysiwyg($font-size: 16px, $line-height: 1.6) {
+    @include font-size($font-size);
+    line-height: $line-height;
+
+    > *:first-child {
+        margin-top: 0;
+    }
+
+    > *:last-child {
+        margin-bottom: 0;
+    }
+
+    .rendered {
+
+        > *:first-child {
+            margin-top: 0;
+        }
+    }
+
+    h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+        margin: 2em 0 1em;
+    }
+
+    p {
+        @include font-size($font-size);
+        line-height: $line-height;
+        margin-top: 0;
+        margin-bottom: 1.5em;
+    }
+
+    a {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: .2em;
+        text-decoration-color: $primary;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    img {
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+    }
+
+    ul {
+        @include font-size($font-size);
+        @include custom-ul($font-size);
+    }
+
+    video, iframe {
+        max-width: 100%;
+    }
+
+    .fr-video {
+        position: relative;
+        padding-bottom: 56.23%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        display: block;
+
+        iframe,
+        object,
+        embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            background: transparent;
+        }
+    }
+}
+
+@mixin custom-ul($font-size: 16, $line-height: 1.6) {
+    @include font-size($font-size);
+    text-align: left;
+    list-style: none;
+    padding-left: 1.5em;
+    margin: 1em 0;
+
+    > li {
+        margin-bottom: 1.5em;
+        position: relative;
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: calc(#{$font-size}px * #{$line-height} / 2 - #{$font-size}px / 4);
+            width: calc(#{$font-size}px / 2);
+            height: calc(#{$font-size}px / 2);
+            background: $primary;
+            border-radius: 50%;
+            position: absolute;
+            left: -20px;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

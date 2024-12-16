@@ -1,0 +1,158 @@
+@use "../global/typography";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+@use "../global/bootstrap";
+
+// Automatically return a light (#fff), dark (#212529) or black (#000) contrast color based on the specified base color. 
+// Then apply color to multiple menu elements
+$footer-background: $primary-dark;
+$footer-theme: color-contrast($primary-dark);
+
+.foo {
+	margin-top: 5rem;
+	position: relative;
+
+	&__main-content {
+		padding: 3.5rem 0;
+		background: $footer-background;
+	}
+
+	&__bottom {
+		padding: 1rem 0;
+		background: shade-color($footer-background, 20%);
+	}
+
+	&__sec-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+		pointer-events: none;
+
+		.foo__subtitle {
+			margin: 0;
+		}
+
+		i {
+			transition: $transition-base;
+			display: none;
+			color: $footer-theme;
+			transform: rotate(0deg);
+		}
+
+		&.collapsed i {
+			transition: $transition-base;
+			transform: rotate(180deg);
+		}
+	}
+
+	&__subtitle {
+		color: $footer-theme;
+		margin-bottom: .9rem;
+		margin-top: 0;
+	}
+
+	&__list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	&__list-item {
+		margin-bottom: 0.8em;
+	}
+
+	&__privacy {
+	    color: $footer-theme;
+	}
+
+	&__logo {
+		width: 7rem;
+		height: auto;
+		margin-right: 1rem;
+	}
+
+	&__copyright {
+		@include p2;
+		margin: 0;
+		color: $footer-theme;
+		vertical-align: bottom;
+	}
+
+	&__madeby {
+		@include p2;
+		text-align: right;
+	    display: flex;
+	    justify-content: flex-end;
+	    align-items: center;
+	    color: $footer-theme;
+	}
+
+	@include media-breakpoint-down(lg) {
+
+		&__privacy {
+		    flex-basis: 100%;
+		    text-align: center;
+		    margin-bottom: 0;
+		}
+	}
+
+	@include media-breakpoint-up(md) {
+
+		&__list.collapse:not(.show) {
+		    display: block;
+		    height: auto !important;
+		    visibility: visible;
+		}
+	}
+
+	@include media-breakpoint-down(sm) {
+
+		&__sec-header {
+			margin-bottom: .9rem;
+			padding-bottom: .9rem;
+			pointer-events: auto;
+			border-bottom: 1px solid $footer-theme;
+
+			.foo__subtitle {
+				margin: 0;
+			}
+
+			i {
+				display: block;
+				color: $footer-theme;
+			}
+		}
+
+		&__list {
+			padding-bottom: .8rem;
+		}
+
+		&__privacy {
+		    flex-basis: 100%;
+		    text-align: center;
+		    margin-bottom: 0;
+		}
+
+		&__logo {
+			margin: 0 auto 1rem;
+			display: block;
+		}
+
+		&__madeby {
+			text-align: center;
+			margin-top: 1rem;
+			display: block;
+
+		    img {
+		    	display: none;
+		    }
+		}
+
+		&__copyright {
+			display: block;
+			text-align: center;
+		    line-height: 1.5;
+		}
+	}
+}

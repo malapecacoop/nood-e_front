@@ -1,0 +1,39 @@
+@use "../global/bootstrap";
+@use "../helpers/mixins";
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    &__item {
+        flex-grow: 1;
+        text-align: center;
+        border-bottom: 1px solid $gray-100;
+    }
+
+    &__link {
+        @include font-size(13px);
+        font-weight: $font-weight-bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-bottom: 2px solid transparent;
+        display: block;
+        width: 100%;
+        padding: .6rem 0;
+        color: $gray-700;
+
+        &.active {
+            color: $primary;
+            border-color: $primary;
+
+            &:hover {
+                border-color: $primary;
+            }
+        }
+
+        &:hover {
+            border-color: $gray-200;
+        }
+    }
+}

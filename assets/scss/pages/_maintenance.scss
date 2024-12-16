@@ -1,0 +1,27 @@
+.maintenance {
+    position: relative;
+    height: 100vh;
+
+    &__content {
+        @include center(true, true);
+        text-align: center;
+        display: block;
+        margin-top: -2vh;
+        width: 90vw;
+    }
+
+    &__logo {
+        margin-bottom: 1rem;
+        max-width: 25rem;
+    }
+
+    &__title {
+        margin-bottom: .2em;
+    }
+
+    &__desc {
+        @include font-size(16px);
+        max-width: 30rem;
+        margin: 0 auto;
+    }
+}

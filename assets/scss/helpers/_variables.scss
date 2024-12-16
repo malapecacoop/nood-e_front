@@ -1,0 +1,24 @@
+// Bootstrap grid brake points
+$sm: map-get($grid-breakpoints, sm);
+$md: map-get($grid-breakpoints, md);
+$lg: map-get($grid-breakpoints, lg);
+$xl: map-get($grid-breakpoints, xl);
+$xxl: map-get($grid-breakpoints, xxl);
+
+:root {
+
+    // Navbar bottom margin
+    --navbar-bottom-margin: 3rem;
+
+    // Footer top margin
+    --footer-top-margin: 5rem;
+
+    @include media-breakpoint-down(sm) {
+
+        // Navbar bottom margin
+        --navbar-bottom-margin: 2rem;
+
+        // Footer top margin
+        --footer-top-margin: 3rem;
+    }
+}

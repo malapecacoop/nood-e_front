@@ -1,0 +1,10 @@
+@use "../helpers/mixins";
+@use "../global/bootstrap";
+
+.custom-ul {
+    @include custom-ul(16);
+}
+
+.custom-ul-sm {
+    @include custom-ul(14);
+}

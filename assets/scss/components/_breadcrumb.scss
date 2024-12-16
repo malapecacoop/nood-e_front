@@ -1,0 +1,27 @@
+.breadcrumb {
+
+	&__item {
+		@include p2;
+		color: $gray-600;
+
+		&.active {
+		}
+
+		&:after {
+			content: '/';
+			color: $gray-900;
+			font-weight: $font-weight-normal;
+			display: inline-block;
+			margin: 0 0.6em;
+		}
+
+		&:last-child:after {
+			display: none;
+		}
+	}
+
+	> a:hover {
+		color: $primary;
+		text-decoration: none;
+	}
+}

@@ -1,0 +1,98 @@
+// Remove button agent styles
+button {
+    border: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+
+    .loading-on {
+        display: none !important;
+    }
+
+    &.loading {
+
+        .loading-on {
+            display: inline-block !important;
+        }
+
+        .loading-off {
+            display: none;
+        }
+    }
+}
+
+
+// Custom button styles
+.btn {
+    height: max-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-link {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: $font-weight-bold;
+
+    &--light {
+        color: $white;
+
+        &:hover, &:focus {
+            color: rgba($white, .8);
+        }
+    }
+}
+
+@property --primaryGradientColor1 {
+    syntax: '<color>';
+    initial-value: #E1F7FB;
+    inherits: false;
+}
+
+@property --primaryGradientColor2 {
+    syntax: '<color>';
+    initial-value: #898BE8;
+    inherits: false;
+}
+
+.btn-primary {
+    border: 1px solid rgba(190, 192, 245);
+    background: linear-gradient(180deg, var(--primaryGradientColor1) 0%, var(--primaryGradientColor2) 100%);
+    color: $primary-darker;
+    transition: --primaryGradientColor1 .4s, --primaryGradientColor2 .4s;
+
+    &:hover {
+        --primaryGradientColor1: #AECBF8;
+        --primaryGradientColor2: #857DEC;
+        transition: --primaryGradientColor1 .4s, --primaryGradientColor2 .4s;
+        border: 1px solid rgba(190, 192, 245);
+    }
+}
+
+.btn-light {
+    color: $black;
+    background-color: $white;
+    border-color: $white;
+
+    &:hover {
+        color: $primary;
+        background-color: $white;
+        border-color: $white;
+    }
+}
+
+.btn-outline-primary {
+    color: $primary-dark;
+}
+
+.btn-outline-light {
+    color: $white;
+    border-color: $white;
+
+    &:hover {
+        color: $primary;
+        background-color: $white;
+        border-color: $black;
+    }
+}

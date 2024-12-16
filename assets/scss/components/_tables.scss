@@ -1,0 +1,54 @@
+// Apply bootstrap tabe css to all tables 
+
+table {
+    width: 100%;
+    color: $table-color;
+    background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+
+    th,
+    td {
+        padding: $table-cell-padding-x $table-cell-padding-y;
+        vertical-align: middle;
+        border-top: $table-border-width solid $table-border-color;
+        @include p2;
+    }
+
+    thead th {
+        vertical-align: bottom;
+        border-bottom: $table-border-width solid $gray-500;
+        border-top: none;
+        @include p2;
+        font-weight: $font-weight-bold;
+    }
+
+    tbody + tbody {
+        border-top: calc(2 * $table-border-width) solid $table-border-color;
+    }
+
+    button, a {
+        text-wrap: nowrap;
+    }
+}
+
+.table--full-width {
+    margin: 0 calc(-1 * $container-padding-x);
+
+    .dt-container {
+        padding: 0 1rem;
+    }
+
+    table {
+        margin: 0 -1rem;
+        width: calc(100% + 2rem) !important;
+
+        th:first-child,
+        td:first-child {
+            padding-left: 1rem;
+        }
+
+        th:last-child,
+        td:last-child {
+            padding-right: 1rem;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+.bd-link {
+    padding: 0.1875rem 0.5rem;
+    color: $body-color;
+    text-decoration: none;
+    border-radius: $border-radius-sm;
+    border: none;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+
+    > * {
+        margin-right: .25rem;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+
+    &:hover, &:focus, &:active, &:active:focus {
+        background-color: $gray-200;
+        box-shadow: none;
+    }
+}

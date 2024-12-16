@@ -1,0 +1,19 @@
+.dropdown {
+
+    > button,
+    > a {
+
+        > i {
+            transition: transform .2s ease;
+        }
+
+        &.show {
+
+            > i {
+                transform: rotate(180deg);
+                transition: transform .2s ease;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,79 @@
+@use "../global/bootstrap";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
+$pu-card-enable-image-padding: true;
+$pu-card-padding:              .8rem;
+$pu-card-border-radius:        .375rem;
+$pu-card-break-point:          $lg;
+
+.pu-card {
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: white;
+    background-clip: border-box;
+    border: 0;
+    box-shadow: 0 .25rem 2.125rem 0 rgba(210,203,206,0.50);
+    border-radius: $pu-card-border-radius;
+    margin-bottom: 1.5rem;
+
+    &__img-wrap {
+        line-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        @if $pu-card-enable-image-padding {
+            padding: $pu-card-padding;
+        }
+    }
+
+    &__img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+
+        @if $pu-card-enable-image-padding {
+        } @else {
+            border-top-left-radius: $pu-card-border-radius;
+            border-top-right-radius: $pu-card-border-radius;
+        }
+    }
+
+    &__body {
+        padding: $pu-card-padding $pu-card-padding calc(#{$pu-card-padding} * 1.25);
+        @if $pu-card-enable-image-padding {
+            margin-top: calc(#{$pu-card-padding} * -1);
+        }
+    }
+
+    &__links {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    @media (min-width: $pu-card-break-point) {
+
+        &.pu-card--horizontal {
+
+            @if $pu-card-enable-image-padding {
+                .pu-card__img-wrap {
+                    margin-bottom: 0;
+                }
+
+                .pu-card__body {
+                    margin-top: 0;
+                    margin-left: calc(#{$pu-card-padding} * -1);
+                    padding-bottom: $pu-card-padding;
+                }
+            } @else {
+                .pu-card__img {
+                    border-bottom-left-radius: $pu-card-border-radius;
+                    border-top-left-radius: $pu-card-border-radius;
+                    border-top-right-radius: 0;
+                }
+            }
+        }
+    }
+}

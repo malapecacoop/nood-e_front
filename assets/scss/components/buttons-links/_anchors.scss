@@ -1,0 +1,14 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.link {
+    color: rgba(var(--#{$prefix}link-color-rgb), var(--#{$prefix}link-opacity, 1));
+    text-decoration: $link-decoration;
+
+    &:hover {
+        --#{$prefix}link-color-rgb: var(--#{$prefix}link-hover-color-rgb);
+        text-decoration: $link-hover-decoration;
+    }
+}

@@ -1,0 +1,26 @@
+@use "../helpers/variables";
+@use "../global/bootstrap";
+
+.card {
+
+    &-field {
+        padding: 10px 20px 11px;
+        border: 1px solid $gray-700;
+        border-radius: 20px;
+    }
+
+    &-error {
+        display: flex;
+        color: $red;
+        align-items: center;
+        margin-top: 1rem;
+
+        svg {
+            margin-right: .6rem;
+        }
+    }
+
+    &-error-message {
+        @include font-size(13px);
+    }
+}

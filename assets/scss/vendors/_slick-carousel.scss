@@ -1,0 +1,46 @@
+@import "@slick-carousel/slick/slick.scss";
+@import "@slick-carousel/slick/slick-theme.scss";
+
+
+.slick-dots {
+    height: 2rem;
+    bottom: auto;
+}
+
+.slick-dots li button:before {
+    font-size: 2rem;
+    color: $background-1;   
+    opacity: 1;
+    transition: $transition-base;
+}
+
+.slick-dots li button:hover:before {
+    color: shade-color($background-1, 10%);  
+    transition: $transition-base;
+}
+
+.slick-dots li.slick-active button:before {
+    color: $primary;
+}
+
+.slick-prev:before {
+    content: "\f137";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+    color: $gray-600;
+}
+
+.slick-next:before {
+    content: "\f138";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+    color: $gray-600;
+}

@@ -1,0 +1,9 @@
+@use "../global/bootstrap";
+
+.divider {
+	color: $gray-800;
+	height: 1px;
+	border: none;
+	border-top: 1px solid $gray-700;
+	margin: .8rem auto;
+}

@@ -1,0 +1,74 @@
+@use "../global/bootstrap";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
+.pillnav {
+    @include font-size(14px);
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 2rem 0;
+    list-style: none;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    &__item {
+        position: relative;
+        display: inline-block;
+        margin: 0 .5rem;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.--is-current {
+
+            a {
+                background: $secondary;
+                color: $primary;
+            }
+
+            i {
+                opacity: 1;
+                width: unset;
+            }
+        }
+
+        a {
+            position: relative;
+            color: $gray-900;
+            background: $white;
+            border-radius: 20rem;
+            padding: .4rem 1.2rem;
+            transition: color 275ms;
+            display: inline-flex;
+            align-items: center;
+            height: 2rem;
+
+            i {
+                margin-right: .25rem;
+                opacity: 0;
+                width: 0;
+            }
+        }
+
+        /*
+        &:not(:first-of-type)::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 10px;
+            bottom: 0;
+            left: -3px;
+            width: 3px;
+            height: 3px;
+            border-radius: 3px;
+            background: $black;
+        }
+        */
+    }
+}

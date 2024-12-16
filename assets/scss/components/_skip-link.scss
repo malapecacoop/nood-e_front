@@ -1,0 +1,19 @@
+@use "../global/bootstrap";
+
+a.skip-link {
+	@include font-size(18px);
+	position: absolute;
+	top: -200px;
+	left: 0;
+	background: $primary;
+	color: $white;
+	padding: 0.5em;
+	z-index: 999;
+	transition: all 0.7s ease;
+	border-radius: 0 4px 4px 0;
+
+	&:focus {
+		transition: all 0.7s ease;
+		top: 0;
+	}
+}

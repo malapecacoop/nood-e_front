@@ -1,0 +1,30 @@
+// Styles common to all forms
+
+form {
+
+    .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    &.error {
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        textarea,
+        select {
+            border-color: $red;
+            color: $red;
+        }
+
+        [type="checkbox"] + label:before {
+            border-color: $red;
+        }
+    }
+}
+
+// reset explorer
+input::-ms-clear {
+    display: none;
+}

@@ -1,0 +1,200 @@
+// Custom styles for type
+
+$rfs-factor: 3;
+
+html {
+	font-size: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+
+    @media (min-width: 1550px) {
+    	font-size: clamp(1rem, calc(1rem + .1vw),1.175rem);
+    }
+}
+
+@mixin display-1 {
+	@include font-size(78px);
+	font-family: $display-font-family;
+	font-weight: $display-font-weight;
+	line-height: 1.3;
+	margin: 0;
+}
+.display-1 {
+	@include display-1;
+}
+
+@mixin display-2 {
+	@include font-size(72px);
+	font-family: $display-font-family;
+	font-weight: $display-font-weight;
+	line-height: 1;
+	margin: 0;
+}
+.display-2 {
+	@include display-2;
+}
+
+@mixin display-3 {
+	@include font-size(64px);
+	font-family: $display-font-family;
+	font-weight: $display-font-weight;
+	line-height: 1;
+	margin: 0;
+}
+.display-3 {
+	@include display-3;
+}
+
+@mixin display-4 {
+	@include font-size(56px);
+	font-family: $display-font-family;
+	font-weight: $display-font-weight;
+	line-height: 1;
+	margin: 0;
+}
+.display-4 {
+	@include display-4;
+}
+
+@mixin display-5 {
+	@include font-size(48px);
+	font-family: $display-font-family;
+	font-weight: $display-font-weight;
+	line-height: 1;
+	margin: 0;
+}
+.display-5 {
+	@include display-5;
+}
+
+@mixin display-6 {
+	@include font-size(40px);
+	font-family: $display-font-family;
+	font-weight: $display-font-weight;
+	line-height: 1;
+	margin: 0;
+}
+.display-6 {
+	@include display-6;
+}
+
+@mixin h1 {
+	@include font-size(41px);
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: 1.1;
+	margin: 0;
+}
+h1, .h1 {
+	@include h1;
+}
+
+@mixin h2 {
+	@include font-size(35px);
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: 1.1;
+	margin: 0;
+}
+h2, .h2 {
+	@include h2;
+}
+
+@mixin h3 {
+	@include font-size(29px);
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: 1.1;
+	margin: 0;
+}
+h3, .h3 {
+	@include h3;
+}
+
+@mixin h4 {
+	@include font-size(24px);
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: 1.1;
+	margin: 0;
+}
+h4, .h4 {
+	@include h4;
+}
+
+@mixin h5 {
+	@include font-size(22px);
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: 1.1;
+	margin: 0;
+}
+h5, .h5 {
+	@include h5;
+}
+
+@mixin h6 {
+	@include font-size(18px);
+	font-family: $headings-font-family;
+	font-weight: $headings-font-weight;
+	line-height: 1.1;
+	margin: 0;
+}
+h6, .h6 {
+	@include h6;
+}
+
+@mixin subtitle-1 {
+	@include font-size(17px);
+	font-family: $headings-font-family;
+	font-weight: $font-weight-bold;
+	line-height: 1.3;
+	margin: 0;
+
+	@media (max-width: 600px) {
+		@include font-size(19px);
+	}
+}
+.subtitle-1 {
+	@include subtitle-1;
+}
+
+@mixin subtitle-2 {
+	@include font-size(15px);
+	font-family: $headings-font-family;
+	font-weight: $font-weight-bold;
+	line-height: 1.3;
+	margin: 0;
+}
+.subtitle-2 {
+	@include subtitle-2;
+}
+
+@mixin p1 {
+	@include font-size(16px);
+	font-family: $font-family-base;
+	font-weight: $font-weight-normal;
+	line-height: 1.5;
+}
+.p1 {
+	@include p1;
+}
+
+@mixin p2 {
+	@include font-size(14px);
+	font-family: $font-family-base;
+	font-weight: $font-weight-normal;
+	line-height: 1.5;
+}
+p, .p2 {
+	@include p2;
+	text-wrap: pretty;
+	margin: 0;
+}
+
+.caption {
+	font-family: $font-family-base;
+	@include font-size(13px);
+	line-height: 1.1;
+}

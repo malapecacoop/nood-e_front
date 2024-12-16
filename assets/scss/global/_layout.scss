@@ -1,0 +1,96 @@
+::-moz-selection { /* Code for Firefox */
+    color: $body-color;
+    background: $primary-light;
+}
+
+::selection {
+    color: $body-color;
+    background: $primary-light;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.app {
+    display: block;
+    position: relative;
+    background: url(/images/page-background.webp);
+    background-size: cover;
+    background-position: top center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-content {
+    height: calc(100vh - 4.5rem);
+    display: flex;
+}
+
+.main-content {
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
+    padding: 0 $container-padding-x 3rem $container-padding-x;
+}
+
+@include media-breakpoint-up(sm) {
+
+    .gutters-sm {
+        margin-right: -3px;
+        margin-left: -3px;
+
+        > .col,
+        > [class*="col-"] {
+            padding-right: 3px;
+            padding-left: 3px;
+        }
+    }
+
+    .gutters-md {
+        margin-right: -9px;
+        margin-left: -9px;
+
+        > .col,
+        > [class*="col-"] {
+            padding-right: 9px;
+            padding-left: 9px;
+        }
+    }
+
+    .gutters-lg {
+        margin-right: -25px;
+        margin-left: -25px;
+
+        > .col,
+        > [class*="col-"] {
+            padding-right: 25px;
+            padding-left: 25px;
+        }
+    }
+
+    .gutters-xl {
+        margin-right: -40px;
+        margin-left: -40px;
+
+        > .col,
+        > [class*="col-"] {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+    }
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*="col-"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}

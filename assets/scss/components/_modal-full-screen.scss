@@ -1,0 +1,16 @@
+.modal--full-screen {
+	padding-right: 0 !important;
+	padding-left: 0 !important;
+	
+	.modal-dialog {
+		max-width: none;
+		margin: auto;
+	}
+
+	.modal-content {
+		border-radius: 0;
+		background-clip: initial;
+		border: none;
+		min-height: 100vh;
+	}
+}

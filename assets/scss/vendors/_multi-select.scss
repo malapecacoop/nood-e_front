@@ -1,0 +1,62 @@
+@import "@multiple-select/src/multiple-select.scss";
+@import "@multiple-select/src/themes/scss";
+
+.ms-choice {
+    border: $input-border-width solid $input-border-color;
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    height: auto;
+    box-shadow: $input-box-shadow;
+    border-radius: $input-border-radius;
+    font-family: $input-font-family;
+
+    > span {
+        position: relative;
+        font-size: $input-btn-font-size;
+        line-height: $input-btn-line-height;
+        color: $input-color; 
+
+        &.placeholder {
+            background: none;
+            color: $input-placeholder-color;
+            cursor: pointer;
+            opacity: 1;
+        }
+    }   
+
+    // Customize the `:focus` state to imitate native WebKit styles.
+    &:focus {
+        color: $input-focus-color;
+        background-color: $input-focus-bg;
+        border-color: $input-focus-border-color;
+        outline: 0;
+        @if $enable-shadows {
+            @include box-shadow($input-box-shadow, $input-focus-box-shadow);
+        } @else {
+            // Avoid using mixin so we can pass custom focus shadow properly
+            box-shadow: $input-focus-box-shadow;
+        }
+    }
+}
+
+.ms-drop {
+    border: $dropdown-border-width solid $dropdown-border-color;;
+    box-shadow: $dropdown-box-shadow;
+    border-radius: $dropdown-border-radius;;
+    padding: .3rem .3rem;
+    background: $dropdown-bg;
+
+    ul {
+
+        > li {
+
+            label {
+                color: $dropdown-link-color;
+                font-size: $dropdown-font-size;
+
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+    }
+}

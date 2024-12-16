@@ -1,0 +1,27 @@
+@use "../helpers/mixins";
+@use "../global/bootstrap";
+
+.caret-right {
+    display: inline-block;
+    position: relative;
+    height: 10px;
+    width: 10px;
+
+    &__line1,
+    &__line2 {
+        transition: $transition-base;
+        height: 2px;
+        width: 0.6em;
+        margin: 0 0 0.23em 0;
+        background: $black;
+        border-radius: 0.3em;
+    }
+
+    &__line1 {
+        transform: rotate(45deg) ;
+    }
+
+    &__line2 {
+        transform: rotate(-45deg) ;
+    }
+}

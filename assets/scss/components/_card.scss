@@ -1,0 +1,20 @@
+@use "../global/bootstrap";
+@use "../helpers/mixins";
+@use "../helpers/variables";
+
+.card {
+
+    &-title {
+        margin-bottom: 1rem;
+    }
+
+    &-text {
+        @include wysiwyg(14px,1.6);
+        margin-bottom: 1rem;
+    }
+
+    &-img-top {
+        margin: 0 auto 1.5rem;
+        max-width: 16rem;
+    }
+}

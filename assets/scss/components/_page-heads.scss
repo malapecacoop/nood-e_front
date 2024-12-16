@@ -1,0 +1,15 @@
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+    align-items: center;
+
+    &__title {
+        @include h5;
+    }
+
+    &__ctas {
+        display: flex;
+        align-items: center;
+    }
+}

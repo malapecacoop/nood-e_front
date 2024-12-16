@@ -1,0 +1,30 @@
+.tag {
+    @include font-size(13px);
+    font-weight: $font-weight-normal;
+    color: $body-color;
+    background: $gray-200;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: .25em 1em;
+    border-radius: 20rem;
+
+    &--light {
+        color: $black;
+        background: rgba(255,255,255,0.9);
+
+        &:hover {
+            background: rgba(255,255,255,1);
+        }
+    }
+
+    &--primary {
+        color: $white;
+        background: $primary;
+
+        &:hover {
+            color: $white;
+            background: shade-color($primary, 10%);
+        }
+    }
+}

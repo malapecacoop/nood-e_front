@@ -1,0 +1,38 @@
+.lost {
+
+	&__img {
+		@include center(true,true);
+		width: 60vw;
+	}
+
+	&__content {
+		margin: 20vw auto 0;
+		min-height: 35vh;
+		max-width: 600px;
+		text-align: center;
+		z-index: 1;
+		position: relative;
+	}
+
+	&__title {
+		@include font-size(15px);
+		color: $gray-900;
+		font-weight: $font-weight-normal;
+		text-transform: uppercase;
+		letter-spacing: .1em;
+	}
+
+	&__hl {
+		margin: 1rem auto;
+		width: 8vw;
+		height: 3px;
+		background: $primary;
+	}
+
+	&__body {
+		@include font-size(24px);
+		font-weight: $font-weight-bold;
+		color: $gray-900;
+		margin-bottom: 2rem;
+	}
+}

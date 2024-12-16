@@ -1,0 +1,7 @@
+.top-bar {
+    height: 3.5rem;
+
+    & .dropdown-menu {
+        z-index: $zindex-popover;
+    }
+}

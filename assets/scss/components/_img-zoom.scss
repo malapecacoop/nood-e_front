@@ -1,0 +1,103 @@
+@use "../helpers/mixins";
+@use "../helpers/variables";
+@use "../global/bootstrap";
+
+.img-zoom {
+
+	&__content {
+		display: flex;
+
+		.carousel-item {
+			line-height: 0;
+		}
+	}
+
+	&__main-img {
+		max-height: 100vh;
+		max-width: 100%;
+		padding: 1%;
+	}
+
+	&__left {
+		flex-basis: 100vw;
+		margin-bottom: 4rem;
+	}
+
+	&__right {
+		position: fixed;
+		top: unset;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background: rgba(255,255,255,0.8);
+		box-shadow: $box-shadow;
+		width: 100vw;
+		height: auto;
+		margin: 0;
+		padding: .7rem 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-direction: row-reverse;
+		z-index: 99;
+	}
+
+	&__controls {
+		padding: 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-basis: 9rem;
+	}
+
+	&__thumbs {
+		display: none;
+	}
+
+	&__thumb {
+		display: block;
+		margin: 0 .3rem;
+
+		img {
+			max-width: 3rem;
+		}
+	}
+
+	@media (orientation: landscape) and (min-width: $md) {
+
+		&__left {
+			flex-basis: 85%;
+			margin-bottom: 0;
+		}
+
+		&__right {
+			flex-basis: 15%;
+			padding-left: 1.2rem;
+			padding-right: 1.2rem;
+			height: 100vh;
+			overflow-y: auto;
+			position: sticky;
+			top: 0;
+			display: block;
+		}
+
+		&__controls {
+			padding: 1.4rem 0 2rem;
+			flex-basis: auto;
+		}
+
+		&__thumbs {
+			margin: 0 auto .7rem auto;
+			display: block;
+		}
+
+		&__thumb {
+			display: block;
+			margin: 0 auto .7rem auto;
+
+			img {
+				max-width: 100%;
+			}
+		}
+	}
+}

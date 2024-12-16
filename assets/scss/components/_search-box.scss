@@ -1,0 +1,91 @@
+@use "../helpers/mixins";
+@use "../helpers/variables";
+@use "../global/bootstrap";
+
+.search-box {
+	position: relative;
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+
+	&__input {
+		@include font-size(14px);
+		transition: $transition-base;
+		color: $gray-900;
+		line-height: 1em;
+		border: none;
+		border-bottom: 1px solid $gray-900;
+		display: inline-block;
+		margin: 0;
+		padding: 0.3rem 0;
+		background-color: rgba(255,255,255,0) !important;
+		opacity: 0;
+		width: 0;
+	    position: relative;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&__open,
+	&__close {
+		cursor: pointer;
+		color: $gray-900;
+	}
+
+	&__close {
+		opacity: 0;
+		display: none;
+	}
+}
+
+.search-open {
+
+	.search-box__input {
+		transition: $transition-base;
+		width: 10rem;
+		opacity: 1;
+	}
+
+	.search-box__close {
+		transition: $transition-base;
+		opacity: 1;
+		display: initial;
+	}
+
+	@include media-breakpoint-down(xl) {
+
+		.search-box__input {
+			width: 10rem;
+		}
+	}
+}
+
+
+
+@include media-breakpoint-down(sm) {
+
+	.search-box {
+		margin-right: .8rem;
+
+		&__input {
+			transition: none;
+		}
+	}
+
+	.search-open {
+
+		.search-box__input {
+			transition: none;
+		}
+
+		.navbar__logo {
+			display: none;
+		}
+
+		.navbar__cart {
+			display: none;
+		}
+	}
+}

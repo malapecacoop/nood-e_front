@@ -1,0 +1,61 @@
+.side-nav {
+    height: 100%;
+    overflow-y: scroll;
+    width: 15rem;
+
+    &__items {
+        list-style: none;
+        padding: 1rem 1.5rem 0 0;
+    }
+
+    &__item {
+        position: relative;
+        margin-bottom: .25rem;
+
+        &:before {
+            @include center (true,true);
+            content: "";
+            height: 50%;
+            width: 50%;
+            background: rgba(47,23,115,0);
+            transition: all .2s ease;
+            pointer-events: none;
+        }
+
+        &.active,
+        &:hover {
+
+            &:before {
+                @include center (true,true);
+                content: "";
+                height: 100%;
+                width: 100%;
+                background: rgba(47,23,115,.1);
+                border-radius: .375rem;
+                transition: all .2s ease;
+            }
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: .5rem .6rem;
+        border-radius: $border-radius;
+    }
+
+    @include media-breakpoint-down(lg) {
+        padding: 1rem;
+        width: 100vw;
+        background: url(/images/page-background.webp);
+        background-size: cover;
+        background-position: top left;
+        height: 100vh;
+        overflow: hidden;
+
+        &__items {
+            padding: 0;
+        }
+    }
+}

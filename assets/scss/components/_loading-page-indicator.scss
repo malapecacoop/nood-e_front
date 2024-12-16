@@ -1,0 +1,8 @@
+@use "../global/bootstrap";
+
+.stripe-loading-indicator .stripe,
+.stripe-loading-indicator .stripe-loaded,
+.oc-progress-bar,
+.oc-progress-bar.is-ajax {
+    background: $primary !important;
+}
