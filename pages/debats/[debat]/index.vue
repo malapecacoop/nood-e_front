@@ -52,7 +52,7 @@
                     <div class="mb-4">
                         <h2 class="subtitle-2 mb-1">Persones d’aquest espai:</h2>
                         <div v-for="member in data.members" :key="member.id" class="d-flex align-items-center mb-1">
-                            <NuxtImg :src="getUrlImage(member.image)" class="rounded-1 me-1 img-fluid" densities="x1 x2" width="42" height="42"/>
+                            <img :src="getUrlImage(member.image)" class="me-1 thumb" style="width: 30px; height: 30px;" alt=""/>
                             <p class="p2">{{ member.name }} {{ member.surname }}</p>
                         </div>
                     </div>          
@@ -60,7 +60,7 @@
                 <div class="col-md-8">
                     <div class="mb-4">
                         <h2 class="subtitle-2 mb-1">Fòrum:</h2>
-                        <DataTable :data="data.topics" :columns="columns" :options="datatableOptions"></DataTable>
+                        <Datatable :data="data.topics" :columns="columns" />
                     </div>
                 </div>
             </div>
@@ -95,29 +95,24 @@
 </template>
 
 <script setup>
-    import DataTable from 'datatables.net-vue3';
-    import DataTablesLib from 'datatables.net-bs5';
+    import Datatable from '~/components/Datatable.vue';
     import { useApiService } from '~/services/apiService';
     import { getDescriptionHTML } from '~/helpers/quillHelper';
-    import { datatableOptions } from '~/config/datatableOptions';
     import { useUserStore } from '~/stores/user';
     import { storeToRefs } from 'pinia';
     import { getUrlImage } from '~/helpers/imageHelper';
 
-    DataTable.use(DataTablesLib);
-
     const nuxtApp = useNuxtApp();
     const { $Snackbar } = nuxtApp;
+    const { user, hasAdminRole } = storeToRefs(useUserStore());
     const route = useRoute();
     const router = useRouter();
     const id = route.params.debat;
-    const data = await useApiService('discussions').fetchById(id);
-    const { user, hasAdminRole } = storeToRefs(useUserStore());
-    const isOwner = user.value.id == data.author_id;
-
-    const htmlDescription = getDescriptionHTML(data.description);
-
     const forumToDelete = ref(null);
+
+    const data = await useApiService('discussions').fetchById(id);
+    const isOwner = user.value.id == data.author_id;
+    const htmlDescription = getDescriptionHTML(data.description);
 
     const columns = [
         { 

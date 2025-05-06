@@ -12,7 +12,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="debate-name">Títol  del fòrum</label>
-                        <input v-model="title" type="text" class="form-control" value="Maria Antonia" placeholder="Nom" id="debate-name" name="debate-name">
+                        <input v-model="title" type="text" class="form-control" value="" placeholder="Nom" id="debate-name" name="debate-name">
                         <div class="input-errors" v-for="error of v$.title.$errors" :key="error.$uid">
                             <div class="p2 mb-1 text-danger">{{ translateError(error.$validator) }}</div>
                         </div>

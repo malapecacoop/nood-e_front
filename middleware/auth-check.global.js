@@ -15,7 +15,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
     
     if (isAuthRoute && accessToken.value) {
         console.warn('L\'usuari ja està autenticat, redirigint al calendari');
-        return navigateTo('/calendari');
+        if (to.path !== '/calendari') {
+            return navigateTo('/calendari');
+        }
     }
 
     if (isAuthRoute) return;
@@ -25,7 +27,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     if (!userStore.user) {
         try {
             const user = await useApiService('me').fetchAll();
-            await userStore.setUser(user); 
+            await userStore.setUser(user);
         } catch (err) {
             console.error('Error al carregar l\'usuari:', err);
             accessToken.value = null;

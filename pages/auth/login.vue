@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <Button buttonClass="btn btn-primary btn-sm w-100 mb-1" buttonType="button" @action="login">
+                <Button buttonClass="btn btn-primary btn-sm w-100 mb-1" buttonType="submit" @action="login">
                     Inicia sessió
                 </Button>
                 <NuxtLink to="/auth/recuperar-contrasenya" class="caption mb-0 link-dark">Has oblidat la contrasenya?</NuxtLink>

@@ -16,21 +16,21 @@
         </div>
         <div class="page-content">
             <div class="table--full-width">
-                <DataTable :data="data" :columns="columns" :options="datatableOptions"></DataTable>
+                <Datatable :data="data" :columns="columns" />
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-import DataTable from 'datatables.net-vue3';
-import DataTablesLib from 'datatables.net-bs5';
 import { useApiService } from '~/services/apiService';
-import { datatableOptions } from '~/config/datatableOptions';
+import Datatable from '~/components/Datatable.vue';
 
-DataTable.use(DataTablesLib);
-
-const data = await useApiService('discussions').fetchAll();
+let data = ref(null);
+const loadDiscussions = async () => {
+    data.value = await useApiService('discussions').fetchAll();
+};
+loadDiscussions();
 
 const columns = [
     { 

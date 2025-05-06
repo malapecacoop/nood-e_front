@@ -125,7 +125,12 @@
     const imageUrl = ref('');
     const imageFile = ref(null);
     const selectedUser = ref(null);
-    const users = ref(await useApiService('users').fetchAllInSearchComponent());
+    const users = ref([]);
+
+    const loadUsers = async () => {
+        users.value = await useApiService('users').fetchAllInSearchComponent();
+    };
+    loadUsers();
 
     const rules = {
         name: { required },

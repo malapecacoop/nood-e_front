@@ -27,7 +27,7 @@
                 </div>
                 <Button
                     buttonClass="btn btn-primary btn-sm w-100 mb-2"
-                    buttonType="button"
+                    buttonType="submit"
                     @action="login"
                 >
                     Acceptar i iniciar sessió
@@ -77,7 +77,7 @@
                 });
 
                 $Snackbar.show({
-                    text: 'Contrassenya canviada amb éxit',
+                    text: 'Contrasenya canviada amb éxit',
                     pos: 'bottom-center',
                     duration: 3000,
                 });

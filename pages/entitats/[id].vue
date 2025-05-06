@@ -47,8 +47,8 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <h2 class="subtitle-2 mb-1">Equip de La Productora:</h2>
-                    <DataTable :data="data.users" :columns="columns" :options="datatableOptions"></DataTable>
+                    <h2 class="subtitle-2 mb-1">Equip de {{ data.name }}:</h2>
+                    <Datatable :data="data.users" :columns="columns" />
                 </div>
             </div>
         </div>
@@ -56,9 +56,6 @@
             @cancel="$hideBootstrapModal('EntityConfirmUserDelete')">
             <template #title>
                 Segur que vols excloure aquest usuari de l'entitat?
-            </template>
-            <template #body>
-                Aquesta acció no es pot desfer.
             </template>
         </Modal>
         <Modal 
@@ -78,28 +75,30 @@
 </template>
 
 <script setup>
-    import DataTable from 'datatables.net-vue3';
-    import DataTablesLib from 'datatables.net-bs5';
+    import Datatable from '~/components/Datatable.vue';
     import { useApiService } from '~/services/apiService';
     import { getDescriptionHTML } from '~/helpers/quillHelper';
-    import { datatableOptions } from '~/config/datatableOptions';
     import { useUserStore } from '~/stores/user';
     import { storeToRefs } from 'pinia';
     import { getUrlImage } from '~/helpers/imageHelper';
 
-    DataTable.use(DataTablesLib);
-
     const nuxtApp = useNuxtApp();
+    const { user, hasAdminRole, hasSuperadminRole } = storeToRefs(useUserStore());
     const { $Snackbar } = nuxtApp;
     const route = useRoute();
     const router = useRouter();
     const id = route.params.id;
-    let data = await useApiService('organizations').fetchById(id);
-    const { user, hasAdminRole, hasSuperadminRole } = storeToRefs(useUserStore());
-    const isOwner = data.owner ? user.value.id == data.owner.id : false;
-
     const userToDelete = ref(null);
-    const htmlDescription = getDescriptionHTML(data.description);
+    const isOwner = ref(false);
+    const htmlDescription = ref('');
+    const data = ref(null);
+
+    const loadOrganizations = async () => {
+        data.value = await useApiService('organizations').fetchById(id);
+        isOwner.value = data.value.owner ? user.value.id == data.value.owner.id : false;
+        htmlDescription.value = getDescriptionHTML(data.value.description);
+    };
+    await loadOrganizations();
 
     const columns = [
         { 
@@ -108,7 +107,7 @@
             render: (item, type, row) => {
                 return `
                     <div>
-                        <img src="${getUrlImage(row.image)}" alt="${row.name}" class="me-2" style="width: 30px; height: 30px;" />
+                        <img src="${getUrlImage(row.image)}" alt="${row.name}" class="me-2 thumb" style="width: 30px; height: 30px;" />
                         ${item}
                     </div>
                 `;

@@ -47,3 +47,7 @@
 .remove-nav-margin {
   margin-top: calc(#{var(--navbar-bottom-margin)} * -1);
 }
+
+img.thumb {
+  object-fit: cover;
+}

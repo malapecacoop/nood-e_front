@@ -46,14 +46,14 @@
                 </div>
                 <div class="mb-4">
                     <h2 class="subtitle-2 mb-1">Calendari de reserves</h2>
-                    <FullCalendar endpoint="events"/>
+                    <FullCalendar :endpoint="`events/rooms/${id}`" />
                 </div>
             </div>
         </div>
         <Modal id="RoomConfirmDelete" @save="deleteRoom"
             @cancel="$hideBootstrapModal('RoomConfirmDelete')">
             <template #title>
-                Segur que vols eliminar aquesta entitat?
+                Segur que vols eliminar aquesta sala?
             </template>
             <template #body>
                 Aquesta acció no es pot desfer.

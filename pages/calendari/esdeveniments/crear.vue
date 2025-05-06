@@ -15,7 +15,7 @@
                         <div class="input-errors" v-for="error of v$.title.$errors" :key="error.$uid">
                             <div class="p2 mb-1 text-danger">{{ translateError(error.$validator) }}</div>
                         </div>
-                </div>
+                    </div>
                     <div class="mb-4 d-sm-flex align-items-center">
                         <i class="material-symbols-outlined me-1" style="width: 1.6rem;">event</i>
                         <input 
@@ -25,6 +25,7 @@
                             name="event-date" 
                             style="max-width: 10rem;"
                             v-model="date"
+                            :max="maxDate"
                         />
                         <span class="p2 mx-1">de</span>
                         <input 
@@ -47,6 +48,65 @@
                         <div class="input-errors" v-if="v$.dateGroup.$error">
                             <div v-if="v$.dateGroup.required.$invalid" class="p2 ms-1 text-danger">Tots els camps de data, inici i fi són obligatoris.</div>
                             <div v-if="v$.dateGroup.validTime.$invalid" class="p2 ms-1 text-danger">L'hora de finalització ha de ser posterior a l'hora d'inici.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="mb-1 d-flex align-items-center">
+                            <i class="material-symbols-outlined me-1" style="width: 1.6rem;">refresh</i>
+                            <label class="subtitle-2">Recurrència</label>
+                        </div>
+                        <div class="ps-md-4">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select v-model="recurrencyType" class="form-control js--select2" id="event-recurrency">
+                                        <option value="">No recurrent</option>
+                                        <option v-for="recurrency in recurencies" :key="recurrency.id" :value="recurrency.id">
+                                            {{ recurrency.label }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" v-if="recurrencyType != ''">
+                                <div class="col-6">
+                                    <label class="form-label mt-2">Finalitza:</label>
+                                    <div class="form-check">
+                                        <input 
+                                            class="form-check-input" 
+                                            type="radio" 
+                                            id="option-mai" 
+                                            name="recurrency-options" 
+                                            value="mai" 
+                                            v-model="recurrencyOption"
+                                        />
+                                        <label class="form-check-label" for="option-mai">Mai</label>
+                                    </div>
+                                    <div class="form-check d-flex align-items-center gap-1">
+                                      <input 
+                                          class="form-check-input" 
+                                          type="radio" 
+                                          id="option-el-dia" 
+                                          name="recurrency-options" 
+                                          value="dia" 
+                                          v-model="recurrencyOption"
+                                      />
+                                      <label class="form-check-label col-2" for="option-el-dia">El dia:</label>
+                                      <input 
+                                          type="date" 
+                                          class="form-control" 
+                                          id="event-date" 
+                                          name="event-date" 
+                                          style="max-width: 10rem;"
+                                          v-model="recurrencyDate"
+                                          :min="date"
+                                          :disabled="recurrencyOption == 'mai'"
+                                      />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-errors" v-if="v$.dateGroup.$error">
+                            <div v-if="v$.dateGroup.validDateRecurrency.$invalid" class="p2 ms-1 text-danger">La data de recurrència ha de ser posterior a la data d'inici.</div>
                         </div>
                     </div>
 
@@ -117,6 +177,7 @@
                                             name="room-select" 
                                             :value="room.id" 
                                             v-model="selectedRoom"
+                                            :id="`room-${room.id}`"
                                         />
                                         <label class="form-check-label" :for="`room-${room.id}`">
                                             {{ room.name }}
@@ -143,7 +204,8 @@
                             </Button>
                             <FullCalendar
                                 v-if="showRooms"
-                                endpoint="events" 
+                                :isInteractive="false"
+                                endpoint="events/rooms" 
                                 :showTimeline="true" 
                                 initialView="resourceTimelineWeek" 
                                 class="mt-2"/>
@@ -225,15 +287,23 @@
     import { useApiService } from '~/services/apiService';
     import { getUrlImage } from '~/helpers/imageHelper';
 
+    const formatTime = (time) => time ? time.slice(0, 5) : '';
+
+    const props = defineProps({
+        dateCreate: { type: String, default: null }
+    });
+
     const originalData = {
         title: '',
-        date: '',
-        start: '',
-        end: '',
+        date: props.dateCreate ? props.dateCreate.split("T")[0] : '',
+        start: props.dateCreate ? formatTime(props.dateCreate.split("T")[1]) : '',
+        end: props.dateCreate ? formatTime(props.dateCreate.split("T")[1]) : '',
         description: { ops: [] },
         callLink: '',
         selectedGuests: [],
-        selectedRoom: null
+        selectedRoom: null,
+        recurrencyType: '',
+        recurrencyDate: null,
     };
 
     const title = ref('');
@@ -248,12 +318,35 @@
     const showRooms = ref(false);
     const availableRooms = ref([]);
     const selectedRoom = ref(null);
-    
+    const recurrencyType = ref('');
+    const recurrencyDate = ref(null);
+    const recurrencyOption = ref('mai');
+    const recurencies = [
+        { id: 1, label: 'Diari' },
+        { id: 2, label: 'Setmanal' },
+        { id: 3, label: 'Mensual' },
+        { id: 4, label: 'Anual' },
+    ];
+
+    date.value = props.dateCreate ? props.dateCreate.split("T")[0] : '';
+    start.value = props.dateCreate ? formatTime(props.dateCreate.split("T")[1]) : '';
+    end.value = props.dateCreate ? formatTime(props.dateCreate.split("T")[1]) : '';
+
+    if (start.value === end.value) {
+        end.value = `${parseInt(start.value.split(':')[0]) + 1}:${start.value.split(':')[1]}`;
+    }
+
+    const maxDate = computed(() => {
+        const today = new Date();
+        return new Date(today.setDate(today.getDate() + 547)).toISOString().split('T')[0];
+    });
 
     const dateGroup = computed(() => ({
         date: date.value,
         start: start.value,
-        end: end.value
+        end: end.value,
+        recurrencyOption: recurrencyOption.value,
+        recurrencyDate: recurrencyDate.value,
     }));
 
     const rules = {
@@ -261,9 +354,9 @@
         dateGroup: {
             required: (value) => value.date && value.start && value.end,
             validTime: (value) => !value.start || !value.end || value.start < value.end,
+            validDateRecurrency: (value) => value.recurrencyOption == 'mai' || (value.recurrencyDate && (value.date < value.recurrencyDate)),
         },
     };
-
 
     const v$ = useVuelidate(rules, {title, dateGroup});
     const nuxtApp = useNuxtApp();
@@ -288,7 +381,9 @@
                     description: typeof description.value === 'string' ? description.value : JSON.stringify(description.value),
                     meet_link: callLink.value,
                     members: memberIds ,
-                    room_id: selectedRoom.value
+                    room_id: selectedRoom.value,
+                    recurrency_type: recurrencyType.value != '' ? recurrencyType.value : null,
+                    recurrency_end: recurrencyOption.value != 'mai' ? recurrencyDate.value : null,
                 });
 
                 $Snackbar.show({
@@ -298,10 +393,24 @@
                     duration: 3000,
                 });
 
+                nuxtApp.$hideBootstrapModal('eventCreatePage');
+                Object.keys(originalData).forEach(key => {
+                    eval(`${key}.value = originalData[key]`);
+                });
+                v$.value.$reset();
+                stopLoading();
                 nuxtApp.$router.push('/calendari');
             } catch (error) {
+                let errorMessage = error.data?.message || 'Hi ha hagut un error, si us plau torna a intentar-ho';
+
+                if (errorMessage === 'Room is not available for some dates in the recurrency') {
+                    errorMessage = 'La sala està ocupada en alguna de les dates de la recurrència';
+                } else if (errorMessage === 'Event start date is too far in the future') {
+                    errorMessage = 'La data d\'inici de l\'esdeveniment és massa llunyana (màxim 18 mesos)';
+                }
+
                 $Snackbar.show({
-                    text: 'Hi ha hagut un error al crear un esdeveniment. Fes un intent més tard',
+                    text: errorMessage,
                     pos: 'bottom-center',
                     type: 'error',
                     duration: 3000,
@@ -375,8 +484,16 @@
         }
     };
 
-    watch([date, start, end], ([newDate, newStart, newEnd]) => {
-        if (newDate && newStart && newEnd) {
+    watch([date, start, end, recurrencyOption, recurrencyType], ([newDate, newStart, newEnd, newRecurrencyOption, newRecurrencyType]) => {
+        if (newRecurrencyType == '') {
+            recurrencyDate.value = null;
+            recurrencyOption.value = 'mai';
+        }
+        if (newRecurrencyOption == 'mai') {
+            recurrencyDate.value = null;
+        }
+        //newEnd can be NaN:undefined
+        if (newDate && newStart && newEnd && !isNaN(new Date(`${newDate} ${newStart}`)) && !isNaN(new Date(`${newDate} ${newEnd}`))) {
             fetchAvailableRooms();
         }
     });

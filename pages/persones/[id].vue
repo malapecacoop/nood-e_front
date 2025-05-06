@@ -37,16 +37,6 @@
                                 Bloquejar
                             </Button>
                         </li>
-                        <li>
-                            <Button
-                                v-if="hasSuperadminRole && !isOwner"
-                                buttonClass="dropdown-item"
-                                buttonType="hyperlink"
-                                @action="$showBootstrapModal('UserDelete')"
-                            >
-                                Eliminar
-                            </Button>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -109,31 +99,6 @@
                 L'usuari no es mostrarà als llistats ni podrà iniciar sessió a la plataforma. Podràs desbloquejar-lo en qualsevol moment.
             </template>
         </Modal>
-        <Modal
-            id="UserNoDelete"
-            @save="$hideBootstrapModal('UserNoDelete')"
-            @cancel="$hideBootstrapModal('UserNoDelete')"
-            >
-            <template #title>
-                Aquest usuari no es pot eliminar
-            </template>
-            <template #body>
-                L'usuari ha creat contingut a la plataforma pel que no podem eliminar-lo. Si vols, el pots bloquejar per ocular-lo i que no pugui iniciar sessió.
-            </template>
-        </Modal>
-        <Modal
-            v-if="hasSuperadminRole && !isOwner"
-            id="UserDelete"
-            @save="deleteUser"
-            @cancel="$hideBootstrapModal('UserDelete')"
-            >
-            <template #title>
-                Estàs segur que vols eliminar aquest usuari?
-            </template>
-            <template #body>
-                Aquesta acció no es pot desfer.
-            </template>
-        </Modal>
     </div>
 </template>
 
@@ -152,12 +117,17 @@
     const id = route.params.id;
 
     const data = await useApiService('users').fetchById(id);
-    const roles = await useApiService('roles').fetchAll();
+
+    const loadRoles = async () => {
+        const roles = await useApiService('roles').fetchAll();
+        const userRoles = ref(roles);
+    };
+    
+    loadRoles();
     
     const person = ref(data);
     const htmlDescription = getDescriptionHTML(person.value.description);
     const selectedPermission = ref(person.value.role.id);
-    const userRoles = ref(roles);
     
     const { user, hasAdminRole, hasSuperadminRole } = storeToRefs(useUserStore());
     const isOwner = user.value.id == person.value.id;
@@ -181,22 +151,6 @@
             nuxtApp.$hideBootstrapModal('UserPermissions');
         } catch (error) {
             console.error('Error actualizando permisos:', error);
-        }
-    };
-
-    const deleteUser = async () => {
-        try {
-            await useApiService('users').remove(id);  
-            $Snackbar.show({
-                text: 'Usuari eliminat amb éxit',
-                pos: 'bottom-center',
-                type: 'success',
-                duration: 3000,
-            });
-            nuxtApp.$hideBootstrapModal('UserDelete');
-            router.push('/persones');
-        } catch (error) {
-            console.error('Error eliminando usuario:', error);
         }
     };
 

@@ -5,7 +5,7 @@ const errorMessages = {
     required: 'Aquest camp és obligatori',
     email: "El format de l'email no és vàlid",
     minLength: 'Aquest camp ha de tenir almenys 9 caràcters',
-    sameAsPassword: 'Les contrassenyes no coincideixen'
+    sameAsPassword: 'Les contrasenyes no coincideixen'
 };
 
 // Function to translate error messages based on validator ID

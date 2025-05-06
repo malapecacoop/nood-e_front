@@ -17,7 +17,7 @@
         </div>
         <div class="page-content">
             <div class="table--full-width">
-                <DataTable :data="data" :columns="columns" :options="datatableOptions"></DataTable>
+                <Datatable :data="data" :columns="columns" />
             </div>
         </div>
         <Modal
@@ -28,18 +28,13 @@
             <template #title>
                 Estàs segur que vols desbloquejar aquest usuari?
             </template>
-            <template #body>
-                Aquesta acció no es pot desfer.
-            </template>
         </Modal>
     </section>
 </template>
 
 <script setup>
-    import DataTable from 'datatables.net-vue3';
-    import DataTablesLib from 'datatables.net-bs5';
+    import Datatable from '~/components/Datatable.vue';
     import { useApiService } from '~/services/apiService';
-    import { datatableOptions } from '~/config/datatableOptions';
     import { useUserStore } from '~/stores/user';
     import { storeToRefs } from 'pinia';
     import { getUrlImage } from '~/helpers/imageHelper';
@@ -49,15 +44,16 @@
     if (!hasAdminRole.value) {
         useNuxtApp().$router.push('/persones');
     }
-
-    DataTable.use(DataTablesLib);
     
     const nuxtApp = useNuxtApp();
     const { $Snackbar } = nuxtApp;
-
-    const data = ref(await useApiService('users?show_deleted=1').fetchAll());
-
+    const data = ref(null);
     const userToUnblock = ref(null);
+    
+    const loadUsers = async () => {
+        data.value = await useApiService('users?show_only_deleted=1').fetchAll();
+    };
+    loadUsers();
 
     const columns = [
         { 
@@ -66,7 +62,7 @@
             render: (data, type, row) => {
                 return `
                     <div>
-                        <img src="${getUrlImage(row.image)}" alt="${row.name}" class="me-2" style="width: 30px; height: 30px;" />
+                        <img src="${getUrlImage(row.image)}" alt="${row.name}" class="me-2 thumb" style="width: 30px; height: 30px;" />
                         ${data}
                     </div>
                 `;
@@ -90,10 +86,7 @@
             data: null, 
             title: 'Accions', 
             render: (data, type, row) => {
-                let actions = `<a href="/persones/${row.id}" class="btn btn-sm btn-outline-primary me-2">Veure perfil</a>`;
-                if (row && row.deleted_at) {
-                    actions += `<a href="#" onclick="showUserUnblockModal(${row.id})" class="btn btn-sm btn-outline-primary">Desbloquejar</a>`;
-                }
+                let actions = `<a href="#" onclick="showUserUnblockModal(${row.id})" class="btn btn-sm btn-outline-primary">Desbloquejar</a>`;
                 return actions;
             }
         }

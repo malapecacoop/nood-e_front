@@ -75,7 +75,7 @@
                         </Button>
                         <Button buttonClass="btn btn-outline-primary w-100" buttonType="button"
                             @action="showPasswordModal">
-                            Canviar contrassenya
+                            Canviar contrasenya
                         </Button>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
         <Modal id="changePassword" @save="changePassword"
             @cancel="$hideBootstrapModal('changePassword')">
             <template #title>
-                Canviar contrassenya
+                Canviar contrasenya
             </template>
             <template #body>
                 <div class="form-group mb-2">
@@ -106,7 +106,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label" for="user-pass2">Repeteix la contrassenya</label>
+                    <label class="form-label" for="user-pass2">Repeteix la contrasenya</label>
                     <input v-model="userPass2" type="password" class="form-control"
                         placeholder="Repetir contrasenya" id="user-pass2" name="user-pass2">
                     <div class="input-errors" v-for="error in v$Password.userPass2.$errors" :key="error.$uid">
@@ -134,7 +134,11 @@
     const router = useRouter();
     const id = route.params.id;
     const data = await useApiService('users').fetchById(id);
-    const entities = await useApiService('organizations').fetchAll();
+
+    const loadEntities = async () => {
+        const entities = await useApiService('organizations').fetchAll();
+    };
+    loadEntities();
 
     const originalData = {
         userName: data.name,
@@ -265,7 +269,7 @@
                     repeat_password: userPass2.value
                 });
                 $Snackbar.show({
-                    text: 'Contrassenya editada amb éxit',
+                    text: 'Contrasenya editada amb éxit',
                     pos: 'bottom-center',
                     type: 'success',
                     duration: 3000,

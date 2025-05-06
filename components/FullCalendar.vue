@@ -1,5 +1,12 @@
 <template>
-    <FullCalendar :options="calendarOptions" :endpoint="endpoint"/>
+    <div class="table-wrapper">
+        <div v-if="loading" class="loader-overlay">
+            <div class="spinner"></div>
+        </div>
+        <FullCalendar ref="refCalendar" :options="calendarOptions" :endpoint="endpoint"/>
+    </div>
+    <ModalPage v-if="useModal && isInteractive" id="eventCreatePage" page-path="/calendari/esdeveniments/crear" :route-params="{ dateCreate: dateCreate }" />
+    <ModalPage v-if="useModal && isInteractive" id="eventEditPage" page-path="/calendari/esdeveniments/[id]" :route-params="{ id: eventEditId }" />
 </template>
 
 <script setup>
@@ -7,10 +14,25 @@
     import dayGridPlugin from '@fullcalendar/daygrid';
     import timeGridPlugin from '@fullcalendar/timegrid';
     import listPlugin from '@fullcalendar/list';
+    import interactionPlugin from '@fullcalendar/interaction';
     import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
     import { useApiService } from '~/services/apiService';
+    import caLocale from '@fullcalendar/core/locales/ca';
+    import ModalPage from '~/components/ModalPage.vue'
+
+    const eventEditId = ref(null)
+    const dateCreate = ref(null)
+    const loading = ref(true)
 
     const props = defineProps({
+        isInteractive: {
+            type: Boolean,
+            default: true
+        },
+        useModal: {
+            type: Boolean,
+            default: true
+        },
         showTimeline: {
             type: Boolean,
             default: false
@@ -34,10 +56,9 @@
 
     const nuxtApp = useNuxtApp();
     const calendarOptions = ref({});
-    let data = ref([]);
-
+    const refCalendar = ref(null);
     const plugins = computed(() => {
-        let basePlugins = [dayGridPlugin, timeGridPlugin, listPlugin];
+        let basePlugins = [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin];
         if (props.showTimeline) {
             basePlugins.push(resourceTimelinePlugin);
         }
@@ -59,22 +80,28 @@
     let dateStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
     let dateEnd = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).toISOString().split('T')[0];
 
-    const getData = async (args) => {
-        if (args) {
-            dateStart = args.startStr;
-            dateEnd = args.endStr;
+    const getData = async (args, successCallback, failureCallback) => {
+        try {
+            loading.value = true;
+            if (args) {
+                dateStart = args.startStr;
+                dateEnd = args.endStr;
 
-            dateStart = dateStart.split('T')[0];
-            dateEnd = dateEnd.split('T')[0];
+                dateStart = dateStart.split('T')[0];
+                dateEnd = dateEnd.split('T')[0];
+            }
+            const rawData = await useApiService(props.endpoint).fetchAll({ start: dateStart, end: dateEnd });
+
+            const transformedEvents = rawData.map(event => ({
+                ...event,
+                resourceId: event.room_id,
+            }));
+
+            successCallback(transformedEvents);
+            loading.value = false;
+        } catch (e) {
+            failureCallback(e);
         }
-        data = await useApiService(props.endpoint).fetchAll({ start: dateStart, end: dateEnd });
-
-        let transformedEvents = data.map(event => ({
-            ...event,
-            resourceId: event.room_id,
-        }));
-
-        calendarOptions.value.events = transformedEvents;
     }
 
     calendarOptions.value = {
@@ -82,24 +109,15 @@
         height: "auto",
         plugins: plugins.value,
         initialView: props.initialView,
-        datesSet: getData,
         headerToolbar: headerToolbar.value,
-        buttonText: {
-            today: 'Avui',
-            month: 'Mes',
-            week: 'Setmana',
-            day: 'Dia',
-            list: 'Agenda',
-            resourceTimelineDay: 'Dia',
-            resourceTimelineWeek: 'Setmana'
-        },
         editable: true,
         dropable: true,
         selectable: true,
         weekends: true,
-        locale: 'ca',
+        locale: caLocale,
+        timeZone: 'UTC',
         resources: [],
-        events: [],
+        events: getData,
         resourceAreaHeaderContent: 'Sales',
         resourceLabelDidMount: function(info) {
             if (!info.resource.extendedProps.is_available) {
@@ -107,8 +125,25 @@
             }
         },
         eventClick: function(info) {
-            nuxtApp.$router.push(`/calendari/esdeveniments/${info.event.id}`);
-        }
+            if (props.isInteractive) {
+                if (props.useModal) {
+                    eventEditId.value = info.event.id;
+                    nextTick(() => {
+                        nuxtApp.$showBootstrapModal('eventEditPage');
+                    });
+                } else {
+                    nuxtApp.$router.push(`/calendari/esdeveniments/${info.event.id}`);
+                }
+            }
+        },
+        dateClick: function(info) {
+            if (props.isInteractive) {
+                if (props.useModal) {
+                    dateCreate.value = info.dateStr;
+                    nuxtApp.$showBootstrapModal('eventCreatePage');
+                }
+            }
+        },
     };
 
     const loadRooms = async () => {
@@ -123,9 +158,18 @@
         calendarOptions.value.resources = transformedRooms;
     };
 
-    await getData();
+    const handleRefreshCalendar = () => {
+        const api = refCalendar.value?.getApi()
+        if (api) {
+            api.refetchEvents()
+        }
+    };
 
     watch(() => props.showDeletedRooms, () => {
         loadRooms();
     }, { immediate: true });
+
+    onMounted(() => {
+        document.addEventListener('hidden.bs.modal', handleRefreshCalendar);
+    });
 </script>

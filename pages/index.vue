@@ -1,9 +1,10 @@
 <template>
-    <h1>Welcome to the homepage</h1>
+    
 </template>
 
-<!-- <script setup lang="ts">
-    definePageMeta({
-        middleware: 'auth'
-    })
-</script> -->
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+router.push('/calendari');
+</script>

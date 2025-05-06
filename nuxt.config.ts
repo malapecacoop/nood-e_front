@@ -2,7 +2,7 @@ import path from 'path';
 
 export default defineNuxtConfig({
   ssr: false,
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NUXT_DEVTOOLS == 'true' },
 
   plugins: [
       '~/plugins/node-snackbar.js',

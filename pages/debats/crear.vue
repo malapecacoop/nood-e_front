@@ -132,9 +132,12 @@
     const v$ = useVuelidate(rules, {title});
     const nuxtApp = useNuxtApp();
 
-    const allUsers = await useApiService('users').fetchAllInSearchComponent();
-    data.value = allUsers;
-    filteredData.value = allUsers;
+    const loadUsers = async () => {
+        const allUsers = await useApiService('users').fetchAllInSearchComponent();
+        data.value = allUsers;
+        filteredData.value = allUsers;
+    };
+    loadUsers();
     
     const saveForm = async (props, stopLoading) => {
         v$.value.$touch();

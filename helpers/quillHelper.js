@@ -1,5 +1,4 @@
 import Quill from 'quill';
-import { ref } from 'vue';
 
 export const quillGetHTML = (inputDelta) => {
     const tempCont = document.createElement("div");
@@ -8,19 +7,14 @@ export const quillGetHTML = (inputDelta) => {
 };
 
 export const getDescriptionHTML = (description) => {
-    const htmlDescription = ref('');
-
-    if (description) {
+    if (description != '') {
         try {
             const delta = JSON.parse(description);
             const html = quillGetHTML(delta);
-            htmlDescription.value = html;
+            return html;
         } catch (error) {
-            htmlDescription.value = '';
+            return '';
         }
-    } else {
-        htmlDescription.value = '';
     }
-
-    return htmlDescription;
+    return '';
 };

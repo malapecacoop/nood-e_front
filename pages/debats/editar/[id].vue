@@ -143,9 +143,12 @@
 
     const v$ = useVuelidate(rules, {title});
 
-    const allUsers = await useApiService('users').fetchAllInSearchComponent();
-    users.value = allUsers;
-    filteredData.value = allUsers;
+    const loadUsers = async () => {
+        const allUsers = await useApiService('users').fetchAllInSearchComponent();
+        users.value = allUsers;
+        filteredData.value = allUsers;
+    };
+    loadUsers();
 
     const saveForm = async (props, stopLoading) => {
         v$.value.$touch();

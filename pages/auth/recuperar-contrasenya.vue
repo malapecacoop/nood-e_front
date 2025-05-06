@@ -17,7 +17,7 @@
                 </div>
                 <Button
                     buttonClass="btn btn-primary btn-sm w-100 mb-2"
-                    buttonType="button"
+                    buttonType="submit"
                     @action="recoveryPass"
                 >
                     Enviar

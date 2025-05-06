@@ -7,7 +7,8 @@
         </button>
     </div>
     <div v-else>
-        <button v-if="buttonType === 'button'" :type="buttonType" :class="buttonClass" @click.prevent="sendEvent" :disabled="disabled" :aria-expanded="buttonAriaExpanded">
+        <button v-if="buttonType === 'button' || buttonType === 'submit'" 
+            :type="buttonType" :class="buttonClass" @click.prevent="sendEvent" :disabled="disabled" :aria-expanded="buttonAriaExpanded">
             <slot></slot>
         </button>
         <NuxtLink v-else :to="buttonLink" :class="buttonClass" @click.prevent="handleLinkClick" :aria-expanded="buttonAriaExpanded">
@@ -40,7 +41,7 @@
     };
 
     const sendEvent = async (event) => {
-        if (props.buttonType === 'button') {
+        if (props.buttonType === 'button' || props.buttonType === 'submit') {
             event.preventDefault();
             loading.value = true;
             emit('action', props.actionAttr, eventExecuted);

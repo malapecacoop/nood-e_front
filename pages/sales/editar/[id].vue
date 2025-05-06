@@ -41,9 +41,6 @@
                             <div class="wysiwyg-14">
                                 <QuillEditor v-model="description" />
                             </div>
-                            <div class="input-errors" v-for="error of v$.description.$errors" :key="error.$uid">
-                                <div class="p2 mb-1 text-danger">{{ translateError(error.$validator) }}</div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,11 +108,10 @@
     const imageFile = ref(null);
 
     const rules = {
-        name: { required },
-        description: { required }
+        name: { required }
     }
 
-    const v$ = useVuelidate(rules, {name, description});
+    const v$ = useVuelidate(rules, {name});
 
     const saveForm = async (props, stopLoading) => {
         v$.value.$touch();

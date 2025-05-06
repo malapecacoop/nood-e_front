@@ -17,24 +17,25 @@
         </div>
         <div class="page-content">
             <div class="table--full-width">
-                <DataTable :data="data" :columns="columns" :options="datatableOptions"></DataTable>
+                <Datatable :data="data" :columns="columns" />
             </div>
         </div>
     </section>
 </template>
 
 <script setup>
-    import DataTable from 'datatables.net-vue3';
-    import DataTablesLib from 'datatables.net-bs5';
+    import Datatable from '~/components/Datatable.vue';
     import { useApiService } from '~/services/apiService';
-    import { datatableOptions } from '~/config/datatableOptions';
     import { useUserStore } from '~/stores/user';
     import { storeToRefs } from 'pinia';
     import { getUrlImage } from '~/helpers/imageHelper';
 
-    DataTable.use(DataTablesLib);
+    let data = ref(null);
+    const loadOrganizations = async () => {
+        data.value = await useApiService('organizations').fetchAll();
+    };
+    loadOrganizations();
 
-    const data = await useApiService('organizations').fetchAll()
     const { hasAdminRole } = storeToRefs(useUserStore());
 
     const columns = [
@@ -44,7 +45,7 @@
             render: (data, type, row) => {
                 return `
                     <div>
-                        <img src="${getUrlImage(row.image)}" alt="${row.name}" class="me-2" style="width: 30px; height: 30px;" />
+                        <img src="${getUrlImage(row.image)}" alt="${row.name}" class="me-2 thumb" style="width: 30px; height: 30px;" />
                         ${data}
                     </div>
                 `;

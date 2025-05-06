@@ -77,7 +77,7 @@
                 </div>
                 <Button
                     buttonClass="btn btn-primary btn-sm w-100 mb-3"
-                    buttonType="button"
+                    buttonType="submit"
                     @action="register"
                 >
                     Registra't

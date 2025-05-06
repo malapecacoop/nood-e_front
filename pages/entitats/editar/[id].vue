@@ -131,8 +131,13 @@ const name = ref(originalData.name);
 const description = ref(originalData.description);
 const imageUrl = ref(originalData.imageUrl);
 const imageFile = ref(null);
-const users = ref(await useApiService('users').fetchAllInSearchComponent());
+const users = ref([]);
 const selectedUser = ref(originalData.selectedUser);
+
+const loadUsers = async () => {
+    users.value = await useApiService('users').fetchAllInSearchComponent();
+};
+loadUsers();
 
 const rules = {
     name: { required },

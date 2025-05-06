@@ -35,7 +35,7 @@
                         <NuxtImg :src="getUrlImage(author.image)" class="rounded-1 me-1 img-fluid" densities="x1 x2" width="56" height="56"/>
                         <div>
                             <p class="p2">{{ author.name }}</p>
-                            <p class="p2 text-secondary">{{ data.created_at }}</p>
+                            <p class="p2 text-secondary">{{ formatDate(data.created_at) }}</p>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                                 <NuxtImg :src="getUrlImage(comment.author.image)" class="rounded-1 me-1 img-fluid" densities="x1 x2" width="38" height="38"/>
                                 <div>
                                     <p class="subtitle-2 mb-0">{{ comment.author.name }}</p>
-                                    <p class="p2 text-secondary">{{ comment.created_at }}</p>
+                                    <p class="p2 text-secondary">{{ formatDate(comment.created_at) }}</p>
                                 </div>
                             </div>
                             <div
@@ -145,6 +145,7 @@
     import { useUserStore } from '~/stores/user';
     import { storeToRefs } from 'pinia';
     import { getUrlImage } from '~/helpers/imageHelper';
+    import { formatDate } from '~/helpers/globalHelper';
 
     const nuxtApp = useNuxtApp();
     const { $Snackbar } = nuxtApp;
